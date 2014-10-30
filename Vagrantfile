@@ -2,12 +2,13 @@
 # vi: set ft=ruby :
 
 Vagrant.configure("2") do |config|
-	config.vm.box = "quantal"
-	config.vm.box_url = "https://github.com/downloads/roderik/VagrantQuantal64Box/quantal64.box"
-
+	config.vm.box = "hashicorp/precise64"
+	
 	config.ssh.forward_agent = true
 
 	config.vm.network :private_network, ip: "192.168.23.4"
+
+	config.vm.provision :shell, inline: 'sudo "echo 8.8.8.8	us.archive.ubuntu.com" >> /etc/hosts'
 
 	config.vm.provision :chef_solo do |chef|
 		chef.cookbooks_path = [ "cookbooks", "site-cookbooks" ]
